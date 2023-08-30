@@ -82,10 +82,10 @@ def _get_webtoon_data(id_list, stars):
 
 
 # 위에서 저장된 csv 파일을 이용해 MySQL DB에 저장하는 함수.
-def _store_db():
+def _store_db(host, pwd, db, port):
     try:
         # 각 MySQL 환경에 맞게 host, user, password, db 값 입력.
-        con = pymysql.connect(host='127.0.0.1', user='root', password='8489',  db='encore', charset='utf8',port=3306)
+        con = pymysql.connect(host=host, user='root', password=pwd,  db=db, charset='utf8', port=port)
         cur = con.cursor()
     except Exception as e:
         print (e)
@@ -138,4 +138,4 @@ with open("./webtoon_star_score.pkl","rb") as f:
 ## 위에서 부터 순서대로 실행된다.
 _get_webtoon_data(ids,stars=stars)
 
-_store_db()             
+_store_db(_,_,_,_)
