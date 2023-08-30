@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity // 해당 클래스가 엔티티임을 명시
-@Table(name = "webtoon")
+@Table(name ="webtoon")
 @AllArgsConstructor // 모든 필드를 매개변수로 갖는 생성자 자동 생성
 @NoArgsConstructor // 매개변수가 없는 생성자 자동 생성
 @EqualsAndHashCode // 객체의 동등성과 동일성을 비교하는 연산 메서드 생성
@@ -53,7 +53,7 @@ public class Webtoon {
     private Float starScore;
 
    // 포스터 이미지
-   @Column
+    @Column
     private String thumbnailUrl;
 
     // 연재 요일
@@ -63,4 +63,8 @@ public class Webtoon {
     // 해시태그
     @Column
     private String hashTag;
+
+    public Webtoon toEntity(){
+        return new Webtoon(numb, webtoonId, title, writer, painter, age, favorite, starScore, thumbnailUrl, publishDay, hashTag);
+    }
 }
