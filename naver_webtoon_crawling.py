@@ -85,7 +85,7 @@ def _get_webtoon_data(id_list, stars):
 def _store_db():
     try:
         # 각 MySQL 환경에 맞게 host, user, password, db 값 입력.
-        con = pymysql.connect(host='127.0.0.1', user='root', password='8489',  db='encore', charset='utf8')
+        con = pymysql.connect(host='127.0.0.1', user='root', password='8489',  db='encore', charset='utf8',port=3306)
         cur = con.cursor()
     except Exception as e:
         print (e)
@@ -96,21 +96,22 @@ def _store_db():
     # 테이블이 없다면 테이블 생성
     if check ==False:  
         cr_table = """CREATE TABLE webtoon(
-                        WebtoonId INT(11) NOT NULL PRIMARY KEY,
-                        Title VARCHAR(255),
-                        Writer VARCHAR(255),
-                        Painter VARCHAR(255),
-                        Age VARCHAR(255),
-                        Favorite INT(11),
-                        StarScore FlOAT(7,2),
-                        ThumbnailUrl VARCHAR(255),
-                        PublishDay VARCHAR(255),
-                        HashTags VARCHAR(255)
+                        numb BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+                        webtoon_id INT(11) UNIQUE NOT NULL,
+                        title VARCHAR(255),
+                        writer VARCHAR(255),
+                        painter VARCHAR(255),
+                        age VARCHAR(255),
+                        favorite INT,
+                        star_score FlOAT(7,2),
+                        thumbnail_url VARCHAR(255),
+                        publish_day VARCHAR(255),
+                        hash_tag VARCHAR(255)
                     )
                     """
         cur.execute(cr_table)
     
-    sql = "INSERT INTO webtoon VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    sql = "INSERT INTO webtoon (webtoon_id, title, writer, painter, age, favorite, star_score, thumbnail_url, publish_day, hash_tag) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
     
     # 해당 csv 파일을 "csv" 모듈 없이 읽게 되면 반환되는 값이 str 형태로 출력되어
     ## 'not enough arugments for format string' 에러가 sql 실행문에 발생한다.
