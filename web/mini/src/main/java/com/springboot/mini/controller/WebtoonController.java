@@ -37,6 +37,7 @@ public class WebtoonController {
         return "webtoons/index";
     }
 
+    // 검색 기능
     @GetMapping("/webtoons/{every}")
     public String show(@PathVariable String every, Model model) {
         List<WebtoonDto> webtoonEntity = webtoonService.searchWebtoonsByEvery(every);
