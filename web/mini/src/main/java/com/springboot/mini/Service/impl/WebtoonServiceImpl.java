@@ -26,6 +26,16 @@ public class WebtoonServiceImpl implements WebtoonService{
         return webtoons.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
+    @Override
+    public List<WebtoonDto> searchWebtoonsByEvery(String every) {
+        List<Webtoon> webtoons = webtoonRepository.queryByEvery(every);
+        return webtoons.stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+    public List<Webtoon> index() {
+        return webtoonRepository.findAll();
+    }
+
     private WebtoonDto convertToDTO(Webtoon webtoon){
         WebtoonDto dto = new WebtoonDto();
         dto.setWebtoonId(webtoon.getWebtoonId());

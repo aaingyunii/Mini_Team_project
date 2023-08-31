@@ -6,4 +6,5 @@ import com.springboot.mini.data.dto.WebtoonDto;
 
 public interface WebtoonService {
     List<WebtoonDto> getWebtoonAll();
+    List<WebtoonDto> searchWebtoonsByEvery(String every);
 }

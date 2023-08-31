@@ -6,11 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.springboot.mini.Service.WebtoonService;
 import com.springboot.mini.data.dto.WebtoonDto;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 public class WebtoonController {
     private final WebtoonService webtoonService;
@@ -31,5 +35,19 @@ public class WebtoonController {
         // 3. 뷰에 전송
         return "webtoons/index";
     }
+
+    @GetMapping("/webtoons/{every}")
+    public String show(@PathVariable String every, Model model) {
+        List<WebtoonDto> webtoonEntity = webtoonService.searchWebtoonsByEvery(every);
+        model.addAttribute("webtoonList", webtoonEntity);
+        return "webtoons/show";
+    }
+
+    // @GetMapping("/webtoons/map/{site}")
+    // public String showBySite(@PathVariable String site, Model model) {
+    //     List<WebtoonDto> webtoonEntityList = webtoonService.searchWebtoonsByEvery(site);
+    //     model.addAttribute("webtoonList", webtoonEntityList);
+    //     return "webtoons/map";
+    //}
 
 }
