@@ -1,0 +1,20 @@
+{{>layouts/header}}
+
+<style>
+    /* 스타일 코드 */
+</style>
+
+<div class="container">
+    <div class="row">
+        {{#weekList}}
+        <div class="col-md-2 md-20">
+            <a href="/webtoons/{{webtoonId}}">
+                <img src="{{thumbnailUrl}}" alt="썸네일" style="max-width: 100%;">
+                <p class="center-text">{{title}}</p>
+            </a>
+        </div>
+        {{/weekList}}
+    </div>
+</div>
+
+{{>layouts/footer}}

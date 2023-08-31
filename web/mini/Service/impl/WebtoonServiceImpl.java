@@ -9,32 +9,23 @@ import org.springframework.stereotype.Service;
 import com.springboot.mini.Service.WebtoonService;
 import com.springboot.mini.data.dto.WebtoonDto;
 import com.springboot.mini.data.dto.WebtoonRankDto;
-import com.springboot.mini.data.dto.WeekDto;
-
 import com.springboot.mini.data.entity.Webtoon;
 import com.springboot.mini.data.entity.WebtoonRank;
-import com.springboot.mini.data.entity.Week;
-
 import com.springboot.mini.data.repository.WebtoonRankRepository;
 import com.springboot.mini.data.repository.WebtoonRepository;
 import com.springboot.mini.data.repository.WebtoonSearchRepository;
-import com.springboot.mini.data.repository.WeekRepository;
-
 
 @Service
 public class WebtoonServiceImpl implements WebtoonService{
     private WebtoonRepository webtoonRepository;
     private WebtoonSearchRepository webtoonSearchRepository;
     private WebtoonRankRepository webtoonRankRepository;
-    private WeekRepository WeekRepository;
 
     @Autowired
     public WebtoonServiceImpl(WebtoonRepository webtoonRepository, WebtoonSearchRepository webtoonSearchRepository, WebtoonRankRepository webtoonRankRepository){
         this.webtoonRepository = webtoonRepository;
         this.webtoonSearchRepository = webtoonSearchRepository;
         this.webtoonRankRepository = webtoonRankRepository;
-        this.WeekRepository = WeekRepository;
-
     }
 
     // 전체 조회
@@ -63,35 +54,15 @@ public class WebtoonServiceImpl implements WebtoonService{
         List<WebtoonRank> webtoonRanks = webtoonRankRepository.queryByGenre(genre);
         return webtoonRanks.stream().map(this::convertToDTO2).collect(Collectors.toList());
     }
-    // week
-    @Override
-    public List<WeekDto> getWebtoonsSortedByPublishDay() {
-    // 요일별로 정렬된 웹툰 리스트 조회 기능을 구현합니다.
-    List<Week> weeks = WeekRepository.findAllSortedByPublishDay();
-    // 엔티티를 DTO로 변환하여 반환합니다.
-        return weeks.stream().map(this::convertToDTO3).collect(Collectors.toList());
-    }
 
-    private WeekDto convertToDTO3(Week week){
-        WeekDto dto = new WeekDto();
-        dto.setWebtoonId(week.getWebtoonId());
-        dto.setTitle(week.getTitle());
-        dto.setPublishDay(week.getPublishDay());
-
-//    // 나머지 필드들도 엔티티에서 가져와서 DTO에 설정
-//    dto.setWriter(week.getWriter());
-//    dto.setPainter(week.getPainter());
-//    dto.setStarScore(week.getStarScore());
-//    dto.setAge(week.getAge());
-//    dto.setFavorite(week.getFavorite());
-//    dto.setHashTag(week.getHashTag());
-//    dto.setThumbnailUrl(week.getThumbnailUrl());
-    return dto;
-    }
-
-
-
-
+    // private WebtoonDto ageToM(WebtoonDto webtoonDto){
+    //     WebtoonDto dto = new WebtoonDto();
+    //     if(dto.getAge() =="RATE_15"){
+    //         dto.setAge("15세 이용가");
+    //     }
+    //     return dto;
+    // }
+    
     private WebtoonDto convertToDTO(Webtoon webtoon){
         WebtoonDto dto = new WebtoonDto();
         dto.setWebtoonId(webtoon.getWebtoonId());

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.springboot.mini.Service.WebtoonService;
 import com.springboot.mini.data.dto.WebtoonDto;
 import com.springboot.mini.data.dto.WebtoonRankDto;
-import com.springboot.mini.data.dto.WeekDto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,7 +31,7 @@ public class WebtoonController {
 
         // 1. 모든 데이터 가져오기
         List<WebtoonDto> webtoonDtos = webtoonService.getWebtoonAll();
-
+        
         // 2. 모델에 데이터 등록
         model.addAttribute("webtoonList", webtoonDtos);
 
@@ -69,13 +68,5 @@ public class WebtoonController {
         model.addAttribute("webtoonRankList",webtoonRankDtos);
         return "webtoons/rank";
     }
-    @GetMapping("/webtoons/week")
-    public String showWeek(Model model) {
-        List<WeekDto> weekDtos = webtoonService.getWebtoonsSortedByPublishDay();
-        model.addAttribute("weekList", weekDtos);
-        
-        return "webtoons/week";
-    }
-    
 
 }

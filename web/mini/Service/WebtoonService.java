@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.springboot.mini.data.dto.WebtoonDto;
 import com.springboot.mini.data.dto.WebtoonRankDto;
-import com.springboot.mini.data.dto.WeekDto;
 
 public interface WebtoonService {
     // 전체 조회
@@ -18,9 +17,4 @@ public interface WebtoonService {
 
     // 장르별 랭크
     List<WebtoonRankDto> showRankByGenre(String genre);
-
-    // 요일별로 정렬된 웹툰 리스트 조회
-    List<WeekDto> getWebtoonsSortedByPublishDay();
 }
-
-
