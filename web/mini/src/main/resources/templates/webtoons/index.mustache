@@ -1,22 +1,22 @@
 {{>layouts/header}}
 
-<table class="table">
-    <thread>
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Title</th>
-            <th scope="col">Content</th>
-        </tr>
-    </thread>
-    <tbody>
+<style>
+    .center-text {
+        text-align: center;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
         {{#webtoonList}}
-        <tr>
-            <th>{{webtoonId}}</th>
-            <th><a href="/webtoons/{{webtoonId}}">{{title}}</a></th>
-            <th>{{hashTag}}</th>
-        </tr>
+        <div class="col-md-2">
+            <a href="/webtoons/{{webtoonId}}">
+                <img src="{{thumbnailUrl}}" alt="Thumbnail" style="max-width: 100%;">
+                <p class="center-text">{{title}}</p>
+            </a>
+        </div>
         {{/webtoonList}}
-    </tbody>
-</table>
+    </div>
+</div>
 
 {{>layouts/footer}}
