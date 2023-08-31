@@ -17,12 +17,13 @@ import lombok.ToString;
 @Table(name ="webtoon")
 @AllArgsConstructor // 모든 필드를 매개변수로 갖는 생성자 자동 생성
 @NoArgsConstructor // 매개변수가 없는 생성자 자동 생성
-@EqualsAndHashCode // 객체의 동등성과 동일성을 비교하는 연산 메서드 생성
+// @EqualsAndHashCode // 객체의 동등성과 동일성을 비교하는 연산 메서드 생성
 @ToString // toString() 메서드를 생성하는 어노테이션
 @Getter
 public class Webtoon {
     // 웹툰 고유 ID 값
     @Id// 이 어노테이션이 선언된 필드는 테이블의 기본값 역할을 수행.(필수 어노테이션)
+    @Column
     private Long numb;
 
     @Column

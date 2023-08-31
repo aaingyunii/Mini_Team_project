@@ -4,10 +4,14 @@ package com.springboot.mini.data.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.springboot.mini.data.entity.Webtoon;
 
-public interface WebtoonRepository extends JpaRepository<Webtoon, String>{
+public interface WebtoonRepository extends JpaRepository<Webtoon, Integer>{
     @Override
     List<Webtoon> findAll();
+
+    @Query("SELECT w FROM Webtoon w WHERE w.webtoonId = :webtoonId")
+    List<Webtoon> queryByWebtoonId(Integer webtoonId);
 }
