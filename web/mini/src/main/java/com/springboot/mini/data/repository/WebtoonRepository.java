@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.springboot.mini.data.entity.Webtoon;
 
-public interface WebtoonRepository extends JpaRepository<Webtoon, String>{
+public interface WebtoonRepository extends JpaRepository<Webtoon, Integer>{
     // @Query("SELECT t FROM webtoon t WHERE t.WebtoonId = :webtoonId")
     // List<Webtoon> queryByWebtoonId(Integer webtoonId);
     // @Query("SELECT w FROM webtoon w")

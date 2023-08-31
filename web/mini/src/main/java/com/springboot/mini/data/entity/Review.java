@@ -21,6 +21,9 @@ public class Review {
     @GeneratedValue
     private Long id;
 
+    @Column
+    private Integer webtoonId;
+    
     // 게시글 제목
     @Column
     private String title;
