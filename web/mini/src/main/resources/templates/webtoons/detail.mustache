@@ -4,7 +4,6 @@
             display: inline-block;
             align-items: center;
             text-align: center;
-            border: 10px solid #4caf50;
             border-radius: 10px;
             box-sizing: border-box;
             width: 100%;
@@ -18,42 +17,54 @@
         }
         .image {
             max-width: 42%;
-            border: 2px solid #ccc;
-            border-radius: 10px;
         }
         .description-box {
             display: inline-block;
             vertical-align: middle;
-            padding: 10px;
-            max-width: 50%;
+            padding: 60px;
+            max-width: 42%;
             box-sizing: border-box;
-            border: 2px solid #ccc;
-            border-radius: 10px;
+            border: 2px solid #E6F8E0; /* 테두리 색 변경 */
+            order-radius: 10px;
+            background-color: #E6F8E0; /* 박스 색 변경 */
         }
         .info-box {
-            margin-top: 10px;
+            display: inline-block; /* 인라인 블록으로 설정하여 옆으로 나란히 배치 */
+            vertical-align: middle;
+            margin-top: 20px;
+            text-align: left; /* 정보를 왼쪽으로 정렬 */
         }
         .title {
             font-size: 30px;
             font-weight: bold;
+            font-family: "나눔고딕", sans-serif;
+            background-color: white; /* 박스 배경색 */
+            color: black; /* 텍스트 색상 */
+            padding: 5px 5px; /* 내부 여백 설정 */
+            border-radius: 5px; /* 박스 테두리 반경 설정 */
         }
         .author {
-            font-style: italic;
+            font-family: "나눔고딕", sans-serif;
         }
         .rating {
-            margin-top: 10px;
+            margin-top: 5px;
+            font-family: "나눔고딕", sans-serif;
         }
         .age-limit {
             margin-top: 5px;
+            font-family: "나눔고딕", sans-serif;
         }
         .publication-date {
             margin-top: 5px;
+            font-family: "나눔고딕", sans-serif;
         }
         .interest {
             margin-top: 5px;
+            font-family: "나눔고딕", sans-serif;
         }
         .hashtags {
             margin-top: 5px;
+            font-family: "나눔고딕", sans-serif;
         }
     </style>
 
@@ -67,13 +78,14 @@
             {{#webtoons}}
             <div class="title">{{title}}</div>
             <div class="info-box">
-                <div class="author">글 작가/그림 작가 : {{writer}} / {{painter}}</div>
-                <div class="rating">별점 : {{starScore}}</div>
-                <div class="age-limit">연령 제한 : {{age}}</div>
-                <div class="publication-date">연재 요일 : {{publishDay}}</div>
-                <div class="interest">관심도 : {{favorite}}</div>
-                <div class="hashtags">해시태그 : {{hashTag}}</div>
+                <div class="author"><strong>글 작가/그림 작가 :</strong> {{writer}} / {{painter}}</div>
+                <div class="rating"><strong>별점 :</strong> {{starScore}}</div>
+                <div class="age-limit"><strong>연령 제한 :</strong> {{age}}</div>
+                <div class="publication-date"><strong>연재 요일 :</strong> {{publishDay}}</div>
+                <div class="interest"><strong>관심도 :</strong> {{favorite}}</div>
+                <div class="hashtags"><strong>해시태그 :</strong> {{hashTag}}</div>
             </div>
+            
             {{/webtoons}}
         </div>
     </div>

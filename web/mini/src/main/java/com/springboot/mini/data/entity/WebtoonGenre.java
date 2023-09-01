@@ -10,21 +10,24 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Table(name = "toonrank")
-@AllArgsConstructor
+@Table(name="genre")
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
-public class WebtoonRank {
+public class WebtoonGenre{
     @Id
     private Long numb;
 
     @Column(name = "genre_code")
     private String genreCode;
 
-    @Column(name = "webtoon_id")
-    private Integer webtoonId;
+    @Column(name = "label_korea")
+    private String labelKorea;
 
-    @Column(name = "genre_rank")
-    private Integer genreRank;
+    @Column(name = "genre_kind")
+    private String genreKind;
+
+    @Column(name = "label_english")
+    private String labelEnglish;
 
 }
