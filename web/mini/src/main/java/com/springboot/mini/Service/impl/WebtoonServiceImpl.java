@@ -8,9 +8,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.springboot.mini.Service.WebtoonService;
@@ -125,7 +125,7 @@ public class WebtoonServiceImpl implements WebtoonService{
         weekDay.put("FRIDAY", "금요일");
         weekDay.put("SATURDAY", "토요일");
         weekDay.put("SUNDAY", "일요일");
-
+        weekDay.put("Finish", "연재 종료");
 
         // 시청 연령 제한 표시 이름 바꾸기
         if("RATE_15".equals(age)){

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +18,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.springboot.mini.Service.WebtoonService;
 import com.springboot.mini.data.dto.WebtoonDto;
 import com.springboot.mini.data.dto.WebtoonGenreRankDto;
-import com.springboot.mini.data.dto.WebtoonRankDto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -57,16 +56,16 @@ public class WebtoonController {
         log.info("나우나우 : "+nowPage);
 
         int beginPage = (nowPage / pageSize) * pageSize + 1;
-        log.info("비긴 : "+beginPage);    
+        log.info("비긴 : "+beginPage);
         int endPage = Math.min(beginPage + pageSize -1, totalPage);
 
         int previous = Math.max(beginPage - pageSize, 1);
 
-        log.info("previous : "+previous); 
+        log.info("previous : "+previous);
 
         int next = Math.min(endPage + 1, totalPage);
 
-        log.info("next : "+next); 
+        log.info("next : "+next);
 
         ArrayList<Integer> pageIndex = new ArrayList<Integer>();
         
