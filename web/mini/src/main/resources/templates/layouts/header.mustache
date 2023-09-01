@@ -58,16 +58,69 @@
             </form>
             <!-- 검색 스크립트 -->
             <script>
+                // 클릭한 버튼의 스타일 상태를 저장하기 위한 객체
+                var buttonStyles = {};
+
                 function performSearch() {
-                    
                     const searchTerm = document.getElementById('searchInput').value;
-                    
-                    const newURL = '/webtoons/search/' + searchTerm;
-                
-                    history.pushState({ path: newURL }, '', newURL);
-                
-                    updateSearchResults(searchTerm);
+                    let newURL = '/webtoons';
+
+                    if (searchTerm) {
+                        newURL = newURL + "/search/" + searchTerm;
+                        history.pushState({ path: newURL }, '', newURL);
+                        updateSearchResults(searchTerm);
+                    } else {
+                        alert("검색어를 입력하세요!!");
+                    }
                 }
+
+               // 클릭한 버튼의 스타일 상태를 저장하기 위한 객체
+                var buttonStyles = {};
+
+                function changeColor(button) {
+                    // 클릭한 버튼의 ID를 가져옴
+                    var buttonId = button.getAttribute('id');
+
+                    // 버튼의 배경색을 'white'로 변경
+                    button.style.backgroundColor = 'white';
+
+                    // 클릭한 버튼의 형제 요소들을 모두 가져와서 배경색과 텍스트 색상을 초기값으로 설정
+                    var siblings = button.parentElement.children;
+                    for (var i = 0; i < siblings.length; i++) {
+                        if (siblings[i] !== button) { // 클릭한 버튼 자체는 변경하지 않도록 조건 추가
+                            siblings[i].style.backgroundColor = ''; // 배경색 초기화
+                            siblings[i].style.color = '#04B45F'; // 텍스트 색상 초기화
+                        }
+                    }
+
+                    // 클릭한 버튼의 스타일 상태를 저장
+                    buttonStyles[buttonId] = 'white';
+                }
+
+                // 페이지 로드 시 버튼 스타일을 복원
+                document.addEventListener("DOMContentLoaded", function () {
+                    var buttons = document.querySelectorAll(".btn-link");
+                    buttons.forEach(function (button) {
+                        var buttonId = button.getAttribute('id');
+
+                        // 저장된 스타일이 있다면 복원
+                        if (buttonStyles[buttonId]) {
+                            button.style.backgroundColor = buttonStyles[buttonId];
+                            if (buttonStyles[buttonId] === 'white') {
+                                button.style.color = '#04B45F';
+                            } else {
+                                button.style.color = '#007bff';
+                            }
+                        }
+
+                        // 각 버튼에 클릭 이벤트 리스너 추가
+                        button.addEventListener("click", function () {
+                            changeColor(this); // 버튼 클릭 시 스타일 변경 함수 호출
+                        });
+                    });
+                });
+
+                
             </script>
         </div>
     </div>

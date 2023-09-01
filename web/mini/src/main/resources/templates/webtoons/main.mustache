@@ -26,6 +26,38 @@
         transition-duration: 0.5s; /* 부드러운 전환 */
     }
 
+    /* 페이징 컨트롤의 글씨체와 글씨색 변경 */
+    .pagination a {
+        font-family: "나눔고딕", sans-serif;
+        font-weight: bold;
+        color: #04B45F; /* 링크의 색상을 초록색으로 변경 */
+    }
+
+    .pagination .active {
+        font-weight: bold; /* 활성 페이지의 글씨를 볼드체로 변경 */
+    }
+    /* 버튼 형태로 변경 */
+    .pagination a {
+        display: inline-block;
+        padding: 5px 10px;
+        margin-right: 5px;
+        border: 1px solid #04B45F;
+        background-color: #fff;
+        text-decoration: none;
+        border-radius: 4px;
+    }
+
+    .pagination a:hover {
+        background-color: #04B45F;
+        color: #fff;
+    }
+
+    .pagination .active {
+        background-color: #04B45F;
+        color: #fff;
+        border: 1px solid #04B45F;
+    }
+
     /* 링크 스타일 설정 */
     a {
         text-decoration: none; /* 밑줄 제거 */
@@ -61,13 +93,14 @@
 
     {{! Page }}
     <div class="pagination justify-content-center">
+        <!-- onclick 이벤트 추가 -->
         <a href="?page={{first}}" class="btn btn-link"><i class="fas fa-angle-double-left">맨앞</i></a>
         <a href="?page={{previous}}" class="btn btn-link"><i class="fas fa-angle-left">이전</i></a>
         {{#pageIndex}}
         <a href="?page={{.}}" class="btn btn-link active">{{.}}</a>
         {{/pageIndex}}
-        <a href="?page={{next}}" class="btn btn-link"><i class="fas fa-angle-right">다음</i></a>
-        <a href="?page={{last}}" class="btn btn-link"><i class="fas fa-angle-double-right">맨뒤</i></a>
+        <a href="?page={{next}}" class="btn btn-link">다음 <i class="fas fa-angle-right"></i></a>
+        <a href="?page={{last}}" class="btn btn-link">맨뒤 <i class="fas fa-angle-double-right"></i></a>
     </div>
 </div>
 {{>layouts/footer}}
