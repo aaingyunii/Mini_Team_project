@@ -50,7 +50,7 @@ public class ReviewController {
     // 리뷰 작성 후 게시
     @PostMapping("/reviews/create")
     public String createReview(ReviewForm form) {
-        log.info(form.toString());
+        log.info("내가 폼이야! : "+form.toString());
         Review review = form.toEntity();
         Review saved = reviewRepository.save(review);
         log.info(saved.toString());
