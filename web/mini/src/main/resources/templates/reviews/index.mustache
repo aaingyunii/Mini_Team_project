@@ -1,5 +1,6 @@
 {{>layouts/header}}
-<table class='table'>
+
+<table class="table">
     <thread>
         <tr>
             <th scope="col">Id</th>
@@ -8,17 +9,15 @@
         </tr>
     </thread>
     <tbody>
-        {{#webtoons}}
+        {{#reviewList}}
         <tr>
             <th>{{id}}</th>
-            <th>{{title}}</th>
+            <th><a href="/reviews/{{id}}">{{title}}</a></th>
             <th>{{content}}</th>
         </tr>
-        {{/webtoons}}
+        {{/reviewList}}
     </tbody>
 </table>
 
-<a href="/articles">메인</a>
-<a href="/articles/{{webtoons.id}}/edit" class="btn btn-primary">수정</a>
-<a href="/articles/{{webtoons.id}}/delete" class="btn btn-danger">삭제</a>
+<a href="/reviews/new">글쓰기</a>
 {{>layouts/footer}}
