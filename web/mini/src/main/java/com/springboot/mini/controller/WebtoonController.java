@@ -131,7 +131,7 @@ public class WebtoonController {
     // 검색 기능 페이지 연결
     @GetMapping("/webtoons/search/{every}")
     public String show(@PathVariable String every, Model model) {
-        log.info("인코딩 : "+every);
+        log.info("처음 every : "+every);
         if(every.contains("&")){
             every=every.replace("&", "/");
         }
