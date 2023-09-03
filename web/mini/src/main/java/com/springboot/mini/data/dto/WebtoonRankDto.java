@@ -1,7 +1,7 @@
 package com.springboot.mini.data.dto;
 
-import com.springboot.mini.data.entity.WebtoonGenre;
 import com.springboot.mini.data.entity.Webtoon;
+import com.springboot.mini.data.entity.WebtoonGenre;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,5 +16,5 @@ public class WebtoonRankDto {
     private Long numb;
     private Integer genreRank;
     private WebtoonGenre genre;
-    private Webtoon webtoon;   
+    private Webtoon webtoon;
 }
