@@ -1,11 +1,14 @@
 {{>layouts/header}}
 
 <style>
+    body, .genre-title,.center-text {
+        font-family: "Sunflower", sans-serif;
+    }
     .center-text {
         text-align: center;
         color: black !important;
         font-weight: bold;
-        font-size: 15px;
+        font-size: 18px;
         margin: 10px 0;
     }
 
@@ -63,11 +66,13 @@
 </style>
 
 <div class="container">
-    <p class="genre-title">{{genreKorean}}</p>
+    <a href="/webtoons/search/{{genreKorean}}?" style="text-decoration: none;">
+        <p class="genre-title">{{genreKorean}}</p>
+    </a>
     <div class="webtoon-container">
         {{#webtoonRankList}}
         <div class="webtoon-card">
-            <div class="center-text" style="font-size: 18px; font-weight: bold;font-family: '나눔고딕', sans-serif; background-color: #E6F8E0; color: white; padding: 5px;">
+            <div class="center-text" style="font-size: 18px; font-weight: bold;font-family: 'Sunflower', sans-serif; background-color: #E6F8E0; color: white; padding: 5px;">
                 {{webtoonRank}} 위
             </div>
             <a href="/webtoons/{{webtoonId}}">
