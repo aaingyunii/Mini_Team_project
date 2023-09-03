@@ -1,0 +1,22 @@
+{{>layouts/header}}
+
+<table class="table">
+    <thread>
+        <tr>
+        <th scope="col">Webtoon Title</th>
+        <th scope="col">Title</th>
+        </tr>
+    </thread>
+    <tbody>
+        {{#reviewList}}
+        <tr>
+            <th>
+            <a href="/webtoons/{{webtoonId}}">{{webtoonTitle}}</a>
+            </th>
+            <th>
+            <a href="/webtoons/reviews/show/{{id}}">{{title}}</a>
+            </th>
+        </tr>
+        {{/reviewList}}
+</table>
+{{>layouts/footer}}

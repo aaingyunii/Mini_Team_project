@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 
 import com.springboot.mini.data.dto.WebtoonDto;
 import com.springboot.mini.data.dto.WebtoonGenreRankDto;
+import com.springboot.mini.data.dto.WebtoonReviewDto;
 
 public interface WebtoonService {
     // 전체 조회
@@ -14,12 +15,32 @@ public interface WebtoonService {
     // 상세 조회
     List<WebtoonDto> getWebtoonByWebtoonId(Integer webtoonId);
 
+    // 상세 페이지에 해시태그를 전달하기 위해
+    String getHashTag(Integer webtoonId);
+
     // 검색
     List<WebtoonDto> searchWebtoonsByEvery(String every);
 
-    // 랭킹검색
+    // Join으로 연결된 테이블에 genre code를 전달하기 위해
     String getGenreCode(String genre);
+
+    // 랭킹 페이지에 한글 장르를 전달하기 위해
     String getGenreKorean(String genre);
 
-    List<WebtoonGenreRankDto> getJoinDtos(String Code);
+    // 랭킹 테이블을 통해 순위 데이터를 보여주는 기능
+    List<WebtoonGenreRankDto> getJoinDtos(String code);
+
+    // 모든 리뷰를 가져오는 기능
+    List<WebtoonReviewDto> getAllReviews();
+
+    // 한 리뷰에 대한 상세 페이지 기능
+    WebtoonReviewDto getReviewOne(Long id);
+
+    // 리뷰 테이블에 담을 웹툰 제목을 가져오는 기능
+    String getWebtoonTitle(Integer webtoonId);
+
+    // 리뷰 테이블에 담을 웹툰 썸네일 url을 가져오는 기능
+    String getThumbnailUrl(Integer webtoonId);
+
+    List<WebtoonReviewDto> getReviewsByWebtoonId(Integer webtoonId);
 }

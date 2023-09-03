@@ -2,6 +2,7 @@ package com.springboot.mini.Service.impl;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,9 +17,13 @@ import org.springframework.stereotype.Service;
 import com.springboot.mini.Service.WebtoonService;
 import com.springboot.mini.data.dto.WebtoonDto;
 import com.springboot.mini.data.dto.WebtoonGenreRankDto;
+import com.springboot.mini.data.dto.WebtoonReviewDto;
 import com.springboot.mini.data.entity.Webtoon;
+import com.springboot.mini.data.entity.WebtoonReview;
 import com.springboot.mini.data.repository.WebtoonGenreRepository;
 import com.springboot.mini.data.repository.WebtoonRepository;
+import com.springboot.mini.data.repository.WebtoonReviewRepository;
+import com.springboot.mini.data.repository.WebtoonReviewWebtoonIdRepository;
 import com.springboot.mini.data.repository.WebtoonSearchRepository;
 
 @Service
@@ -27,14 +32,19 @@ public class WebtoonServiceImpl implements WebtoonService{
     private WebtoonRepository webtoonRepository;
     private WebtoonSearchRepository webtoonSearchRepository;
     private WebtoonGenreRepository webtoonGenreRepository;
+    private WebtoonReviewRepository webtoonReviewRepository;
+    private WebtoonReviewWebtoonIdRepository webtoonReviewWebtoonIdRepository;
 
     @Autowired
     public WebtoonServiceImpl(WebtoonRepository webtoonRepository, WebtoonSearchRepository webtoonSearchRepository
-    , WebtoonGenreRepository webtoonGenreRepository){
+    , WebtoonGenreRepository webtoonGenreRepository, WebtoonReviewRepository webtoonReviewRepository
+    , WebtoonReviewWebtoonIdRepository webtoonReviewWebtoonIdRepository){
+
         this.webtoonRepository = webtoonRepository;
         this.webtoonSearchRepository = webtoonSearchRepository;
         this.webtoonGenreRepository = webtoonGenreRepository;
-
+        this.webtoonReviewRepository = webtoonReviewRepository;
+        this.webtoonReviewWebtoonIdRepository = webtoonReviewWebtoonIdRepository;
     }
 
     // 전체 조회
@@ -56,6 +66,13 @@ public class WebtoonServiceImpl implements WebtoonService{
         return webtoons.stream().map(this::convertToDTO2).collect(Collectors.toList());
     }
 
+    // 해시태그 전달
+    @Override
+    public String getHashTag(Integer webtoonId){
+        String hashTagList = webtoonRepository.queryByWebtoonIdHashTag(webtoonId);
+        return hashTagList;
+    }
+
     // 검색
     @Override
     public List<WebtoonDto> searchWebtoonsByEvery(String every) {
@@ -63,24 +80,63 @@ public class WebtoonServiceImpl implements WebtoonService{
         return webtoons.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
     
+    // 장르 코드 전달
     @Override
     public String getGenreCode(String genre) {
         String genreCode = webtoonGenreRepository.queryByGenreCode(genre);
         return genreCode;
     }
 
+    // 장르 한글 명 전달
     @Override
     public String getGenreKorean(String genre) {
         String genreKorean = webtoonGenreRepository.queryByGenreKoran(genre);
         return genreKorean;
     }
 
-    // 장르별 TOP10 랭크
+    // 장르별 TOP10 랭크 전달
     @Override
-    public List<WebtoonGenreRankDto> getJoinDtos(String Code){
-        List<WebtoonGenreRankDto> genreRanks = webtoonGenreRepository.queryByGenreCodeWithWebtoonWithWebtoonRank(Code);
+    public List<WebtoonGenreRankDto> getJoinDtos(String code){
+        List<WebtoonGenreRankDto> genreRanks = webtoonGenreRepository.queryByGenreCodeWithWebtoonWithWebtoonRank(code);
         return genreRanks;
     }
+
+    @Override
+    public ArrayList<WebtoonReviewDto> getAllReviews(){
+        ArrayList<WebtoonReview> reviews = webtoonReviewRepository.findAll();
+
+        return reviews.stream().map(this::convertReviewToDTO).collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    @Override
+    public WebtoonReviewDto getReviewOne(Long id){
+        WebtoonReview reviews = webtoonReviewRepository.findById(id).orElse(null);
+
+        return convertReviewToDTO(reviews);
+    }
+
+    @Override
+    public String getWebtoonTitle(Integer webtoonId){
+        String webtoonTitle = webtoonRepository.queryByWebtoonIdWebtoonTitle(webtoonId);
+
+        return webtoonTitle;
+    }
+
+    @Override
+    public String getThumbnailUrl(Integer webtoonId){
+        String thumbnailUrl = webtoonRepository.queryByWebtoonIdThumbnailUrl(webtoonId);
+
+        return thumbnailUrl;
+    }
+
+    @Override
+    public List<WebtoonReviewDto> getReviewsByWebtoonId(Integer webtoonId){
+        List<WebtoonReview> reviews = webtoonReviewWebtoonIdRepository.queryByWebtoonId(webtoonId);
+
+        return reviews.stream().map(this::convertReviewToDTO).collect(Collectors.toList());
+    }
+
+    //-------- Service 내에서만 활용되는 함수들 -----------------------
 
     private WebtoonDto convertToDTO(Webtoon webtoon){
         WebtoonDto dto = new WebtoonDto();
@@ -91,6 +147,7 @@ public class WebtoonServiceImpl implements WebtoonService{
         return dto;
     }
 
+    
     private WebtoonDto convertToDTO2(Webtoon webtoon){
         WebtoonDto dto = new WebtoonDto();
         dto.setWebtoonId(webtoon.getWebtoonId());
@@ -104,16 +161,47 @@ public class WebtoonServiceImpl implements WebtoonService{
         dto.setPublishDay(webtoon.getPublishDay());
         dto.setHashTag(webtoon.getHashTag());
 
-        dto = changeWords(dto);
+        dto = changeAgeToKorean(dto);
+        dto = changePublishdayToKorean(dto);
+        dto = changeFavoriteFormatting(dto);
 
         return dto;
     }
 
-    private WebtoonDto changeWords(WebtoonDto webtoonDto){
+    private WebtoonReviewDto convertReviewToDTO(WebtoonReview webtoonReview){
+        WebtoonReviewDto dto = new WebtoonReviewDto();
+        dto.setId(webtoonReview.getId());
+        dto.setTitle(webtoonReview.getTitle());
+        dto.setContent(webtoonReview.getContent());
+        dto.setWebtoonId(webtoonReview.getWebtoonId());
+        dto.setWebtoonTitle(webtoonReview.getWebtoonTitle());
+        dto.setThumbnailUrl(webtoonReview.getThumbnailUrl());
+
+        return dto;
+    }
+
+    // 시청 연령 제한을 한글 표기로 바꿈.
+    private WebtoonDto changeAgeToKorean(WebtoonDto webtoonDto){
         String age = webtoonDto.getAge();
+
+        // 시청 연령 제한 표시 이름 바꾸기
+        if("RATE_15".equals(age)){
+            webtoonDto.setAge("15세 이용가");
+        }else if("RATE_18".equals(age)){
+            webtoonDto.setAge("18세 이용가, 성인물");
+        }else if("RATE_12".equals(age)){
+            webtoonDto.setAge("12세 이용가");
+        }else{
+            webtoonDto.setAge("전체 이용가");
+        }
+
+        return webtoonDto;
+    }
+    
+    // 영어 연재일을 한글로 바꿈
+    private WebtoonDto changePublishdayToKorean(WebtoonDto webtoonDto){
         String publishDay = webtoonDto.getPublishDay();
-        String favor = webtoonDto.getFavorite();
-        
+
         // HashMap을 사용하여 요일을 번역하는 맵을 생성합니다.
         Map<String, String> weekDay = new HashMap<>();
 
@@ -127,17 +215,6 @@ public class WebtoonServiceImpl implements WebtoonService{
         weekDay.put("SUNDAY", "일요일");
         weekDay.put("Finish", "연재 종료");
 
-        // 시청 연령 제한 표시 이름 바꾸기
-        if("RATE_15".equals(age)){
-            webtoonDto.setAge("15세 이용가");
-        }else if("RATE_18".equals(age)){
-            webtoonDto.setAge("18세 이용가, 성인물");
-        }else if("RATE_12".equals(age)){
-            webtoonDto.setAge("12세 이용가");
-        }else{
-            webtoonDto.setAge("전체 이용가");
-        }
-        
         // 연재 요일을 한글로 바꾸기
         if(publishDay.length()>9){
             String[] dayArray = publishDay.split(",");
@@ -162,6 +239,13 @@ public class WebtoonServiceImpl implements WebtoonService{
             String translatedDay = weekDay.get(publishDay);
             webtoonDto.setPublishDay(translatedDay.toString());
         }
+
+        return webtoonDto;
+    }
+
+    // 관심도 숫자를 #,### 형식화로 표기
+    private WebtoonDto changeFavoriteFormatting(WebtoonDto webtoonDto){
+        String favor = webtoonDto.getFavorite();
 
         // 관심도 수를 자릿수마다 ',' 로 형식화
         DecimalFormat decimalFormat = new DecimalFormat("#,###");

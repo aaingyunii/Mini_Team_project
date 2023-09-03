@@ -9,6 +9,17 @@ import org.springframework.data.jpa.repository.Query;
 import com.springboot.mini.data.entity.Webtoon;
 
 public interface WebtoonRepository extends JpaRepository<Webtoon, Integer>{
+    // 웹툰 id에 따른 상세 컬럼들을 가져오는 쿼리
     @Query("SELECT w FROM Webtoon w WHERE w.webtoonId = :webtoonId")
     List<Webtoon> queryByWebtoonId(Integer webtoonId);
+
+    // 선택한 웹툰의 해시태그를 가져오는 쿼리
+    @Query("SELECT w.hashTag FROM Webtoon w WHERE w.webtoonId = :webtoonId")
+    String queryByWebtoonIdHashTag(Integer webtoonId);
+
+    @Query("SELECT w.title FROM Webtoon w WHERE w.webtoonId = :webtoonId")
+    String queryByWebtoonIdWebtoonTitle(Integer webtoonId);
+
+    @Query("SELECT w.thumbnailUrl FROM Webtoon w WHERE w.webtoonId = :webtoonId")
+    String queryByWebtoonIdThumbnailUrl(Integer webtoonId);
 }
