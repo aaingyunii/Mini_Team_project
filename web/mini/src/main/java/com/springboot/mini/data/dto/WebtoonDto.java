@@ -23,6 +23,4 @@ public class WebtoonDto {
     private String favorite;
     private String hashTag;
     private String thumbnailUrl;
-    public void changeWords(WebtoonDto dto) {
-    }
 }
