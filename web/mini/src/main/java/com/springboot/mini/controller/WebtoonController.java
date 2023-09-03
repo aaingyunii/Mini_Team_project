@@ -1,7 +1,5 @@
 package com.springboot.mini.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -117,6 +115,8 @@ public class WebtoonController {
         // ,를 포함한 여러 문자열들이 합쳐진 문자열을
         // ,를 기준으로 리스트 나눠서 상세 페이지에 전달. -> 각 해시태그 마다 #를 붙이고 링크를 달기 위해.
         String hashTags= webtoonService.getHashTag(webtoonId);
+        log.info("hass : "+hashTags);
+
         List<String> hashTagList = Arrays.asList(hashTags.split(","));
 
         log.info("해시태그 리스트 : "+hashTagList);
@@ -130,11 +130,12 @@ public class WebtoonController {
 
     // 검색 기능 페이지 연결
     @GetMapping("/webtoons/search/{every}")
-    public String show(@PathVariable String every, Model model) throws UnsupportedEncodingException {
+    public String show(@PathVariable String every, Model model) {
         log.info("인코딩 : "+every);
-        // URL 디코딩 수행
-        every = URLDecoder.decode(every, "UTF-8");
-        log.info("디코딩 : "+every);
+        if(every.contains("&")){
+            every=every.replace("&", "/");
+        }
+        log.info("&를 /로 대체한 이후 : "+every);
 
         List<WebtoonDto> webtoonDtos = webtoonService.searchWebtoonsByEvery(every);
         

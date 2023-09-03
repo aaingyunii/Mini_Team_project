@@ -134,8 +134,10 @@
 
 <script>
 function redirectToSearch(tag) {
-    const encodedTag = encodeURIComponent(tag);
-    const url = `/webtoons/search/${encodedTag}`;
+    if(tag.includes("/")){
+        tag = tag.replace("/","&");
+    }
+    const url = `/webtoons/search/${tag}`;
     window.location.href = url;
 }
 </script>
