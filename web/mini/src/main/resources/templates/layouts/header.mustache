@@ -77,10 +77,18 @@
                 var buttonStyles = {};
 
                 function performSearch() {
-                    const searchTerm = document.getElementById('searchInput').value;
+                    // 자바스크립트에서 const는 상수
+                    // let으로 선언해야 값 변경이 가능하다.
+                    let searchTerm = document.getElementById('searchInput').value;
                     let newURL = '/webtoons';
 
+
                     if (searchTerm) {
+
+                        if(searchTerm.includes("/")){
+                            searchTerm = searchTerm.replace("/","&");
+                        }
+                        
                         newURL = newURL + "/search/" + searchTerm;
                         history.pushState({ path: newURL }, '', newURL);
                         updateSearchResults(searchTerm);
