@@ -28,12 +28,13 @@
     - `Java` : 11 버전
     - `Dependency` : `Spring Web, MySQL, Lombok, Spring Boot DevTools, Mustache` 추가
 
-- 뷰에서는 `mustache` 템플릿 엔진을 사용했습니다.<br>
+- 뷰에서는 `mustache` 템플릿 엔진을 사용했습니다.<br><br>
+
 - #### DB Tables : 
-<br>1. **`webtoon`** - 크롤링한 2023.08.29 기준 연재 중인 웹툰 데이터 + `toonrank` 테이블 생성 시 추가된 연재 종료된 웹툰 데이터를 포함
-<br>2. **`genre`** - 장르 코드와 장르의 한글 이름, 영어 이름, 장르의 종류 데이터 포함. `toonrank` 테이블과 `Join` 쿼리를 위해 생성
-<br>3. **`toonrank`** - 장르 코드와 웹툰 아이디, 해당하는 랭킹 숫자 데이터 포함. 이후 `genre` 테이블과 `webtoon` 테이블고의 `Join`을 통해 썸네일 이미지 url, 웹툰 명을 전달받아 사용.
-<br>4. **`webtoon_review`** : 미리 생성된 테이블이 아닌 `Entity` 연결을 통해 생성된 테이블. 리뷰에 매칭되는 웹툰 ID, 제목, 썸네일 이미지 url 데이터를 포함하고 리뷰 제목과 내용 데이터도 포함.
+>1. **`webtoon`** - 크롤링한 2023.08.29 기준 연재 중인 웹툰 데이터 + `toonrank` 테이블 생성 시 추가된 연재 종료된 웹툰 데이터를 포함
+>2. **`genre`** - 장르 코드와 장르의 한글 이름, 영어 이름, 장르의 종류 데이터 포함. `toonrank` 테이블과 `Join` 쿼리를 위해 생성
+>3. **`toonrank`** - 장르 코드와 웹툰 아이디, 해당하는 랭킹 숫자 데이터 포함. 이후 `genre` 테이블과 `webtoon` 테이블고의 `Join`을 통해 썸네일 이미지 url, 웹툰 명을 전달받아 사용.
+>4. **`webtoon_review`** : 미리 생성된 테이블이 아닌 `Entity` 연결을 통해 생성된 테이블. 리뷰에 매칭되는 웹툰 ID, 제목, 썸네일 이미지 url 데이터를 포함하고 리뷰 제목과 내용 데이터도 포함.
 
 - `Entity, Repository, Service, DTO, Controller` 객체를 생성하여 웹 페이지에 데이터를 전달하는 과정에 대해 학습할 수 있었고,
 - 특히, DB에 저장된 데이터 값을 `Service` 내에서 변환하여 `Controller`를 통해 웹 뷰에 전달하는 것을 구현하면서 **`Back-end`** 개념을 이해할 수 있었습니다.
