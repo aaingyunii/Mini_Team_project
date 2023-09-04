@@ -138,4 +138,4 @@ with open("./webtoon_star_score.pkl","rb") as f:
 ## 위에서 부터 순서대로 실행된다.
 _get_webtoon_data(ids,stars=stars)
 
-_store_db(_,_,_,_)
+_store_db(host=,pwd=,db=,port=)

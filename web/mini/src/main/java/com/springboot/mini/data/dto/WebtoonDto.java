@@ -20,7 +20,7 @@ public class WebtoonDto {
     private Float starScore;
     private String age;
     private String publishDay;
-    private Integer favorite;
+    private String favorite;
     private String hashTag;
     private String thumbnailUrl;
 }
