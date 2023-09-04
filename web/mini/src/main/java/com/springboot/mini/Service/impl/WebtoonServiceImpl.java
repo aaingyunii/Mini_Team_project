@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,6 +102,7 @@ public class WebtoonServiceImpl implements WebtoonService{
         return genreRanks;
     }
 
+    //전체 리뷰를 dto로 가져옴
     @Override
     public ArrayList<WebtoonReviewDto> getAllReviews(){
         ArrayList<WebtoonReview> reviews = webtoonReviewRepository.findAll();
@@ -108,6 +110,7 @@ public class WebtoonServiceImpl implements WebtoonService{
         return reviews.stream().map(this::convertReviewToDTO).collect(Collectors.toCollection(ArrayList::new));
     }
 
+    // 선택한 리뷰의 상세 내용을 가져오는 기능
     @Override
     public WebtoonReviewDto getReviewOne(Long id){
         WebtoonReview reviews = webtoonReviewRepository.findById(id).orElse(null);
@@ -115,6 +118,7 @@ public class WebtoonServiceImpl implements WebtoonService{
         return convertReviewToDTO(reviews);
     }
 
+    // 리뷰 테이블에 삽입할 웹툰 제목 문자열 반환
     @Override
     public String getWebtoonTitle(Integer webtoonId){
         String webtoonTitle = webtoonRepository.queryByWebtoonIdWebtoonTitle(webtoonId);
@@ -122,6 +126,7 @@ public class WebtoonServiceImpl implements WebtoonService{
         return webtoonTitle;
     }
 
+    // 리뷰 테이블에 삽입할 웹툰 썸네일 url 문자열 반환
     @Override
     public String getThumbnailUrl(Integer webtoonId){
         String thumbnailUrl = webtoonRepository.queryByWebtoonIdThumbnailUrl(webtoonId);
@@ -129,11 +134,35 @@ public class WebtoonServiceImpl implements WebtoonService{
         return thumbnailUrl;
     }
 
+    // 웹툰 ID에 따른 모든 리뷰 가져오는 기능
     @Override
     public List<WebtoonReviewDto> getReviewsByWebtoonId(Integer webtoonId){
         List<WebtoonReview> reviews = webtoonReviewWebtoonIdRepository.queryByWebtoonId(webtoonId);
 
         return reviews.stream().map(this::convertReviewToDTO).collect(Collectors.toList());
+    }
+
+    // 관심도 내림차순으로 정렬
+    @Override
+    public List<WebtoonDto> getWebtoonOrderByFavoriteDESC(){
+        List<Webtoon> webtoons = webtoonRepository.queryOrderByFavoriteDESC();
+
+        return webtoons.stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+    // 관심도 오름차순으로 정렬
+    @Override
+    public List<WebtoonDto> getWebtoonOrderByFavoriteASC(){
+        List<Webtoon> webtoons = webtoonRepository.queryOrderByFavoriteASC();
+
+        return webtoons.stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<WebtoonDto> getWebtoonByPublishDay(String publishDay){
+        List<Webtoon> webtoons = webtoonSearchRepository.queryByPublishDay(publishDay);
+
+        return webtoons.stream().map(this::convertToDTO2).collect(Collectors.toList());
     }
 
     //-------- Service 내에서만 활용되는 함수들 -----------------------
@@ -144,6 +173,10 @@ public class WebtoonServiceImpl implements WebtoonService{
         dto.setTitle(webtoon.getTitle());
         dto.setThumbnailUrl(webtoon.getThumbnailUrl());
         dto.setHashTag(webtoon.getHashTag());
+        dto.setFavorite(webtoon.getFavorite().toString());
+        
+        dto = changeFavoriteFormatting(dto);
+        
         return dto;
     }
 
@@ -176,7 +209,7 @@ public class WebtoonServiceImpl implements WebtoonService{
         dto.setWebtoonId(webtoonReview.getWebtoonId());
         dto.setWebtoonTitle(webtoonReview.getWebtoonTitle());
         dto.setThumbnailUrl(webtoonReview.getThumbnailUrl());
-
+        
         return dto;
     }
 

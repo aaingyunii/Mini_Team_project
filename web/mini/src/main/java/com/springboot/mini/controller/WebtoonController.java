@@ -2,7 +2,9 @@ package com.springboot.mini.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -140,7 +142,8 @@ public class WebtoonController {
         List<WebtoonDto> webtoonDtos = webtoonService.searchWebtoonsByEvery(every);
         
         model.addAttribute("webtoonList", webtoonDtos);
-        
+        model.addAttribute("every", every);
+                
         return "webtoons/search";
     }
     
@@ -260,4 +263,48 @@ public class WebtoonController {
         
         return "reviews/review_list_by_webtoon";
     }
+
+    @GetMapping("/webtoons/order/favorite/desc")
+    public String webtoonOrderByFavoriteDESC(Model model){
+        List<WebtoonDto> webtoonDtos = webtoonService.getWebtoonOrderByFavoriteDESC();
+
+        model.addAttribute("favoriteDESC", webtoonDtos);
+
+        return "webtoons/order_by_favorite_DESC";
+    }
+
+    @GetMapping("/webtoons/order/favorite/asc")
+    public String webtoonOrderByFavoriteASC(Model model){
+        List<WebtoonDto> webtoonDtos = webtoonService.getWebtoonOrderByFavoriteASC();
+
+        model.addAttribute("favoriteASC", webtoonDtos);
+
+        return "webtoons/order_by_favorite_ASC";
+    }
+
+    @GetMapping("/webtoons/publishDay/show/{weekDay}")
+    public String webtoonWeekDayShow(@PathVariable String weekDay, Model model){
+        List<WebtoonDto> webtoonDtos = webtoonService.getWebtoonByPublishDay(weekDay);
+        log.info("위크데이 디티오 : "+webtoonDtos);
+
+        Map<String, String> englishDay = new HashMap<>();
+
+        // 요일을 맵에 추가합니다.
+        englishDay.put("MONDAY", "월요일");
+        englishDay.put("TUESDAY", "화요일");
+        englishDay.put("WEDNESDAY", "수요일");
+        englishDay.put("THURSDAY", "목요일");
+        englishDay.put("FRIDAY", "금요일");
+        englishDay.put("SATURDAY", "토요일");
+        englishDay.put("SUNDAY", "일요일");
+        englishDay.put("Finish", "연재 종료");
+
+        String translatedDay = englishDay.get(weekDay);
+
+        model.addAttribute("weekDay", translatedDay);
+        model.addAttribute("webtoonList", webtoonDtos);
+
+        return "webtoons/weekDayShow";
+    }
+    
 }

@@ -12,4 +12,8 @@ public interface WebtoonSearchRepository extends JpaRepository<Webtoon, String>{
     @Query("SELECT t FROM Webtoon t WHERE t.writer like %:every% or t.painter like %:every% or "+
             "t.publishDay like %:every% or t.title like %:every% or t.hashTag like %:every%")
     List<Webtoon> queryByEvery(String every);
+
+    @Query("SELECT w FROM Webtoon w WHERE w.publishDay Like %:publishDay%")
+    List<Webtoon> queryByPublishDay(String publishDay);
+
 }

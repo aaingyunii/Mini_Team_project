@@ -22,4 +22,11 @@ public interface WebtoonRepository extends JpaRepository<Webtoon, Integer>{
 
     @Query("SELECT w.thumbnailUrl FROM Webtoon w WHERE w.webtoonId = :webtoonId")
     String queryByWebtoonIdThumbnailUrl(Integer webtoonId);
+
+    @Query("SELECT w FROM Webtoon w ORDER BY w.favorite DESC")
+    List<Webtoon> queryOrderByFavoriteDESC();
+
+    @Query("SELECT w FROM Webtoon w ORDER BY w.favorite ASC")
+    List<Webtoon> queryOrderByFavoriteASC();
+
 }

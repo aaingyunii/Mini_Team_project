@@ -18,8 +18,8 @@ public class WebtoonReviewDto {
     private Integer webtoonId;
     private String webtoonTitle;
     private String thumbnailUrl;
-    private String title; // 제목
-    private String content; // 내용
+    private String title; // 리뷰 제목
+    private String content; // 리뷰 내용
 
     public WebtoonReview toEntity() {
         return new WebtoonReview(id, webtoonId, webtoonTitle,thumbnailUrl, title, content);
